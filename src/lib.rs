@@ -1,5 +1,6 @@
-use std::ffi::{CStr, CString};
+use std::mem::ManuallyDrop;
 use std::os::raw::c_char;
+use std::ffi::{CStr, CString};
 use ecies::{PublicKey, SecretKey};
 use ecies::{encrypt, decrypt, utils::generate_keypair};
 
@@ -27,10 +28,9 @@ pub unsafe extern "C" fn ecies_generate_secret_key() -> *const c_char {
     let secret_key_hex = hex::encode(secret_key_buffer);
 
     let secret_key_cstring_result = CString::new(secret_key_hex);
-    let secret_key_cstr = secret_key_cstring_result.unwrap();
+    let secret_key_cstr = ManuallyDrop::new(secret_key_cstring_result.unwrap());
 
     let secret_key_ptr = secret_key_cstr.as_ptr();
-    std::mem::forget(secret_key_cstr);
 
     secret_key_ptr
 }
@@ -59,10 +59,11 @@ pub unsafe extern "C" fn ecies_public_key_from(secret_key_ptr: *const c_char) ->
     let public_key_hex = hex::encode(public_key_buffer);
 
     let public_key_cstring_result = CString::new(public_key_hex);
-    let public_key_cstr = public_key_cstring_result.unwrap();
+    // ManuallyDrop is useful when the ownership of the underlying resource is transferred to code outside of Rust
+    let public_key_cstr = ManuallyDrop::new(public_key_cstring_result.unwrap());
 
     let public_key_ptr = public_key_cstr.as_ptr();
-    std::mem::forget(public_key_cstr);
+
 
     public_key_ptr
 }
@@ -95,11 +96,10 @@ pub unsafe extern "C" fn ecies_encrypt(public_key_ptr: *const c_char, message_pt
     let encrypted_buffer = &encrypted[..];
     let encoded = base64::encode(encrypted_buffer);
 
-    let encrypted_message_cstring = CString::new(encoded).unwrap();
+    let encrypted_message_cstring = ManuallyDrop::new(CString::new(encoded).unwrap());
     let encrypted_message_cstr = encrypted_message_cstring.as_c_str().to_str().unwrap();
 
     let encrypted_message_ptr = encrypted_message_cstr.as_ptr();
-    std::mem::forget(encrypted_message_cstring);
 
     encrypted_message_ptr as *const c_char
 }
@@ -134,11 +134,10 @@ pub unsafe extern "C" fn ecies_decrypt(secret_key_ptr: *const c_char, message_pt
     let decrypted_result = decrypt(&serialized_secret_key_buffer, &message_vec[..]);
     let decrypted = decrypted_result.unwrap();
 
-    let decrypted_message_cstring = CString::new(decrypted).unwrap();
+    let decrypted_message_cstring = ManuallyDrop::new(CString::new(decrypted).unwrap());
     let decrypted_message_cstr = decrypted_message_cstring.as_c_str().to_str().unwrap();
 
     let decrypted_message_ptr = decrypted_message_cstr.as_ptr();
-    std::mem::forget(decrypted_message_cstring);
 
     decrypted_message_ptr as *const c_char
 }
