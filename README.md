@@ -1,7 +1,12 @@
 # ecies-rust-ffi
-A Rust Foreign Function Interface (FFI) crypto framework to C-based libraries e.g `.a`, `.dylib`, `.xcframework` etc
+A Rust Foreign Function Interface (FFI) for the Elliptic Curve Integrated Encryption Scheme (ECIES) crypto scheme to C-based libraries e.g `.a`, `.dylib`, `.xcframework` etc
 
-This module uses the Elliptic Curve Integrated Encryption Scheme (ECIES)
+## Usage
+### Testing the crypto module
+Simply run `cargo run` from the root directory. This will run `src/main.rs` - which contains the same code as `src/lib.rs`, with the addition of the `fn main()` which contains the code to test the library.
+
+### Generating a frameworks
+Run the `generate_xcframework.sh` script to generate an xcframework which you can them embed in your project. You may need to run `chmod +x generate_xcframework.sh` to give it execution permission
 
 ## Summary
 ### Generate a private key
