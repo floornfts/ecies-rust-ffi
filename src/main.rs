@@ -6,17 +6,20 @@ use ecies::{encrypt, decrypt, utils::generate_keypair};
 
 /*
 This module implements a Rust Foreign Function Interface (FFI) crypto framework to C-based libraries e.g .a staticlib, dylib, xcframework etc
+
 Summary:
-- Generate a private key, 
-- Generate a public key from a private key, 
-- Encrypt a message using a public key, and 
-- Decrypt a message using a private key. 
+    - Generate a private key, 
+    - Generate a public key from a private key, 
+    - Encrypt a message using a public key, and 
+    - Decrypt a message using a private key. 
 
 This module uses the Elliptic Curve Integrated Encryption Scheme (ECIES)
 */
 
-// Generates a new secret key using the libsecp256k1 library 
-// It returns the hexadecimal representation of the serialized secret key as a C string.
+/*
+Generates a new secret key using the libsecp256k1 library 
+It returns the hexadecimal representation of the serialized secret key as a C string.
+*/
 
 #[no_mangle]
 pub unsafe extern "C" fn ecies_generate_secret_key() -> *const c_char {
@@ -36,12 +39,14 @@ pub unsafe extern "C" fn ecies_generate_secret_key() -> *const c_char {
 }
 
 
-// Generates a public key from the given secret key
-// It takes a secret key as a C string and returns the corresponding public key as a C string. 
-// Steps: 
-//      - Convert the secret key from a C string to a Rust string, 
-//      - Decode the hexadecimal representation of the secret key, and then 
-//      - Generate the public key from the secret key.
+/*
+Generates a public key from the given secret key
+It takes a secret key as a C string and returns the corresponding public key as a C string. 
+Steps: 
+     - Convert the secret key from a C string to a Rust string, 
+     - Decode the hexadecimal representation of the secret key, and then 
+     - Generate the public key from the secret key.
+*/
 
 #[no_mangle]
 pub unsafe extern "C" fn ecies_public_key_from(secret_key_ptr: *const c_char) -> *const c_char {
@@ -68,12 +73,14 @@ pub unsafe extern "C" fn ecies_public_key_from(secret_key_ptr: *const c_char) ->
     public_key_ptr
 }
 
-// Encrypts a message using the provided public key.
-// It takes a public key and a message as C strings and returns the encrypted message as a base64-encoded C string. 
-// Steps:
-//      - Convert the public key from a C string to a Rust string, 
-//      - Decode the hexadecimal representation of the public key, 
-//      - Encrypt the the message using ecies encryption
+/*
+Encrypts a message using the provided public key.
+It takes a public key and a message as C strings and returns the encrypted message as a base64-encoded C string. 
+Steps:
+     - Convert the public key from a C string to a Rust string, 
+     - Decode the hexadecimal representation of the public key, 
+     - Encrypt the the message using ecies encryption
+*/
 
 #[no_mangle]
 pub unsafe extern "C" fn ecies_encrypt(public_key_ptr: *const c_char, message_ptr: *const c_char) -> *const c_char {
@@ -105,12 +112,14 @@ pub unsafe extern "C" fn ecies_encrypt(public_key_ptr: *const c_char, message_pt
 }
 
 
-// Decrypts a message using the provided secret key.
-// It takes a secret key and a message as C string and returns the decrypted message as a C string. 
-// Steps:
-//      - Convert the private key and encrypted message from C strings to Rust strings 
-//      - Decode the hexadecimal representation of the private key, 
-//      - Decrypt the message using ecies decryption
+/*
+Decrypts a message using the provided secret key.
+It takes a secret key and a message as C string and returns the decrypted message as a C string. 
+Steps:
+     - Convert the private key and encrypted message from C strings to Rust strings 
+     - Decode the hexadecimal representation of the private key, 
+     - Decrypt the message using ecies decryption
+*/
 
 #[no_mangle]
 pub unsafe extern "C" fn ecies_decrypt(secret_key_ptr: *const c_char, message_ptr: *const c_char) -> *const c_char {
