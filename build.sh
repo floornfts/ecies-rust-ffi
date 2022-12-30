@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # ASSUMPTIONS
-# - Cargo package manager is already installed on your computer
+# 1. Cargo package manager is already installed on your computer
+#   - If Cargo is not installed, you can install it by running this command on your terminal: `$ curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh`
 
 # This generates an .xcframework that can be embedded in your app as a crypto module
 
@@ -34,13 +35,23 @@ cargo build --release --target x86_64-apple-ios
 # Build for Apple iOS Simulator running on macs with Apple Silicon chip 
 # NOTE - this command currently (December 2022) fails with the error:
 # thread 'main' panicked at 'don't know how to configure OpenSSL for aarch64-apple-ios-sim'
-# cargo build --release --target aarch64-apple-ios-sim
+# So we need to use the nightly build and install it locally from source
 
-# Generate an xcframework named `Ecies`, with support for aarch64-apple-ios and x86_64-apple-ios
+# First we need to install the nightly toolchain
+rustup toolchain install nightly-aarch64-apple-darwin
+
+# Then add rust-src to the toolchain - which is a local copy of the Rust standard library source code
+rustup component add rust-src --toolchain nightly-aarch64-apple-darwin
+
+# Finally, build for the simulator from source using build-std - Cargo's experimental feature that allows us to rebuild the standard library locally
+cargo +nightly build -Z build-std --target aarch64-apple-ios-sim --release
+
+# Generate an xcframework named `Ecies`, with support for aarch64-apple-ios (devices) and aarch64-apple-ios-sim (M1 simulators). 
+# Unfortunately we can't have both aarch64-apple-ios-sim and x86_64-apple-ios as xcodebuild quips "Both 'ios-x86_64-simulator' and 'ios-arm64-simulator' represent two equivalent library definitions."
 xcodebuild -create-xcframework \
   -library ./target/aarch64-apple-ios/release/libecies.a \
   -headers ./include/ \
-  -library ./target/x86_64-apple-ios/release/libecies.a \
+  -library ./target/aarch64-apple-ios-sim/release/libecies.a \
   -headers ./include/ \
   -output Ecies.xcframework
 
@@ -52,7 +63,7 @@ xcodebuild -create-xcframework \
 # │   │   ├── ecies.h
 # │   │   └── module.modulemap
 # │   └── libecies.a
-# ├── ios-arm64_x86_64-simulator
+# ├── ios-arm64-simulator
 #     ├── Headers
 #     │   ├── ecies.h
 #     │   └── module.modulemap
