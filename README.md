@@ -5,8 +5,29 @@ A Rust Foreign Function Interface (FFI) for the Elliptic Curve Integrated Encryp
 ### Testing the crypto module
 Simply run `cargo run` from the root directory. This will run `src/main.rs` - which contains the same code as `src/lib.rs`, with the addition of the `fn main()` which contains the code to test the library.
 
-### Generating frameworks
-Run the `generate_xcframework.sh` script to generate an xcframework which you can then embed in your project. You may need to run `chmod +x generate_xcframework.sh` to give the file permission to execute.
+### Generating Libraries
+
+#### iOS
+Run the `build.sh` script to generate an `xcframework` which you can then embed in your Swift project. You may need to run `chmod +x build.sh` to give the file permission to execute. 
+
+#### Android, Lunux, Windows, MacOS
+The `build.sh` targets iOS. However, you can make minimal changes to build for Android or any other platform by replacing the architecture in the buil command with your own. For example, to build for Android:
+
+```
+# First install target platform 
+rustup target add arm-linux-androideabi
+
+# Then build for target platform
+cargo build --release --target arm-linux-androideabi
+```
+The build commands generate `.a` static libs that can already be used as static libs (perhaps by first combining two or more architectures into a universal (fat) lib by using `lipo`) depending on the need. You can also change the `crate-type` in `Cargo.toml` from `"staticlib"` to `"cdylib"` to create a C dynamic library for instance, or change the `[lib]` to `[[bin]]` to create an executable binary etc. The possibilities are infinite. Rust is incredibly amazing!
+
+Note that to cross-compile for Android, the Android NDK must be installed first. See [Rust cross-compilation](https://rust-lang.github.io/rustup/cross-compilation.html) for more.
+
+To see the full list of supported architectures you can run
+```
+rustup target list
+```
 
 ## Summary
 ### Generate a private key

@@ -27,9 +27,15 @@ endof
 
 # Build for Apple iOS devices/platform's 64-bit ARM (aarch64) architecture 
 # The --release flag specifies that the build should be optimized for release, rather than debugging.
+
+# First install target platform
+rustup target add aarch64-apple-ios
+# Then build for target platform
 cargo build --release --target aarch64-apple-ios
 
 # Build for Apple iOS Simulator on macs with x86 Intel microprocessor chip
+
+rustup target add x86_64-apple-ios
 cargo build --release --target x86_64-apple-ios
 
 # Build for Apple iOS Simulator running on macs with Apple Silicon chip 
@@ -44,6 +50,7 @@ rustup toolchain install nightly-aarch64-apple-darwin
 rustup component add rust-src --toolchain nightly-aarch64-apple-darwin
 
 # Finally, build for the simulator from source using build-std - Cargo's experimental feature that allows us to rebuild the standard library locally
+rustup target add aarch64-apple-ios-sim
 cargo +nightly build -Z build-std --target aarch64-apple-ios-sim --release
 
 # Generate an xcframework named `Ecies`, with support for aarch64-apple-ios (devices) and aarch64-apple-ios-sim (M1 simulators). 
