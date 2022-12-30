@@ -70,6 +70,8 @@ const char *ecies_decrypt(const char *secret_key_ptr, const char *message_ptr);
 
 ### Swift Example
 ```
+import Ecies
+
 enum CryptoError: Error {
     case encryptionFailure
     case decryptionFailure
