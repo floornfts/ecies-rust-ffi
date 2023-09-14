@@ -1,3 +1,0 @@
-cargo:rerun-if-changed=build/main.rs
-cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/mpendulo/Documents/dev/consensys/ecies-rust-ffi/target/armv7-linux-androideabi/release/build/typenum-0d3777fa0a13abae/out/consts.rs
-cargo:rustc-env=TYPENUM_BUILD_OP=/Users/mpendulo/Documents/dev/consensys/ecies-rust-ffi/target/armv7-linux-androideabi/release/build/typenum-0d3777fa0a13abae/out/op.rs
