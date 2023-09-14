@@ -11,7 +11,7 @@ Simply run `cargo run` from the root directory. This will run `src/main.rs` - wh
 Run the `build.sh` script to generate an `xcframework` which you can then embed in your Swift project. You may need to run `chmod +x build.sh` to give the file permission to execute. 
 
 #### Android, Lunux, Windows, MacOS
-The `build.sh` targets iOS. However, you can make minimal changes to build for Android or any other platform by replacing the architecture in the buil command with your own. For example, to build for Android:
+For iOS builds, go to the `ios` directory and likewise for Android, see the `android` directory. The `build.sh` in the ios directory is a script that installs all the required dependencies and generates the xframework for you. However, you can make minimal changes to build for Android or any other platform by replacing the architecture in the build script commands with your own. For example, to build for Android:
 
 ```
 # First install target platform 
@@ -30,6 +30,7 @@ rustup target list
 ```
 
 ## Summary
+This summary is using an iOS context. For Android, the concept is the same, only a few minor differences - refer to the `android` directory.
 ### Generate a private key
 ```
 // Rust ffi
