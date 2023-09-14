@@ -1,0 +1,6 @@
+ar: creating archive libssl.a
+ar: creating archive libcrypto.a
+warning: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: archive library: libssl.a the table of contents is empty (no object file members in the library define global symbols)
+warning: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: archive library: libcrypto.a the table of contents is empty (no object file members in the library define global symbols)
+warning: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: archive library: /Users/mpendulo/Documents/dev/consensys/ecies-rust-ffi/target/armv7-linux-androideabi/release/build/openssl-sys-0a7ac4614dc2f5f9/out/openssl-build/install/lib/libcrypto.a.new the table of contents is empty (no object file members in the library define global symbols)
+warning: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib: archive library: /Users/mpendulo/Documents/dev/consensys/ecies-rust-ffi/target/armv7-linux-androideabi/release/build/openssl-sys-0a7ac4614dc2f5f9/out/openssl-build/install/lib/libssl.a.new the table of contents is empty (no object file members in the library define global symbols)

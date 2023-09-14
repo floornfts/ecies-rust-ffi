@@ -1,0 +1,7 @@
+/Users/mpendulo/Documents/dev/consensys/ecies-rust-ffi/target/aarch64-linux-android/release/deps/subtle-0d4daf78297e03e6.rmeta: /Users/mpendulo/.cargo/registry/src/github.com-1ecc6299db9ec823/subtle-2.4.1/src/lib.rs
+
+/Users/mpendulo/Documents/dev/consensys/ecies-rust-ffi/target/aarch64-linux-android/release/deps/libsubtle-0d4daf78297e03e6.rlib: /Users/mpendulo/.cargo/registry/src/github.com-1ecc6299db9ec823/subtle-2.4.1/src/lib.rs
+
+/Users/mpendulo/Documents/dev/consensys/ecies-rust-ffi/target/aarch64-linux-android/release/deps/subtle-0d4daf78297e03e6.d: /Users/mpendulo/.cargo/registry/src/github.com-1ecc6299db9ec823/subtle-2.4.1/src/lib.rs
+
+/Users/mpendulo/.cargo/registry/src/github.com-1ecc6299db9ec823/subtle-2.4.1/src/lib.rs:
