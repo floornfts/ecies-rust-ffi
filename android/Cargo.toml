@@ -16,7 +16,7 @@ crate-type = ["cdylib"]
 ecies = { git = "https://github.com/ecies/rs", version = "0.2.3" }
 libsecp256k1 = "0.7.1"
 rand = {version = "0.8.5"}
-openssl = { version = "0.10.45", features = ["vendored"] }
+openssl = { version = "0.10.70", features = ["vendored"] }
 #openssl-sys = "0.9.80"
 hex = "0.4.3"
 base64 = "0.20.0"
